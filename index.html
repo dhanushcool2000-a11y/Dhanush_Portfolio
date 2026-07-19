@@ -726,6 +726,39 @@
       });
     })();
   </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('pdfModal');
+    const iframe = modal.querySelector('iframe');
+    const titleEl = modal.querySelector('.pdf-modal-title');
+    const closeBtn = modal.querySelector('.pdf-close');
 
+    // Open modal when a case-cta button is clicked
+    document.querySelectorAll('.case-cta').forEach(button => {
+      button.addEventListener('click', () => {
+        const pdfUrl = button.dataset.pdf;      // e.g. "assets/pdfs/brand-engine.pdf"
+        const pdfTitle = button.dataset.title;  // e.g. "Brand Engine Case Study"
+
+        iframe.src = pdfUrl;
+        titleEl.textContent = pdfTitle;
+        modal.classList.add('open');            // .pdf-modal.open { display:flex; } in your CSS
+      });
+    });
+
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('open');
+      iframe.src = ''; // optional: clear src when closing
+    });
+
+    // Close when clicking outside the inner box
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.classList.remove('open');
+        iframe.src = '';
+      }
+    });
+  });
+</script>
 </body>
 </html>
